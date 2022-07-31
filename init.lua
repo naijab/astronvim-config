@@ -18,7 +18,7 @@ local config = {
   },
 
   -- Set colorscheme
-  colorscheme = "default_theme",
+  colorscheme = "catppuccin",
 
   -- Override highlight groups in any theme
   highlights = {
@@ -81,18 +81,24 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      -- You can disable default plugins as follows:
-      -- ["goolord/alpha-nvim"] = { disable = true },
-
-      -- You can also add new plugins here as well:
-      -- { "andweeb/presence.nvim" },
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
+      {
+        "catppuccin/nvim",
+        as = "catppuccin",
+        config = function()
+          require("catppuccin").setup {}
+        end,
+      },
+      --https://github.com/iamcco/markdown-preview.nvim
+      {
+        "iamcco/markdown-preview.nvim",
+        config = function ()
+          vim.fn["mkdp#util#install"]()
+        end
+      },
+      --https://github.com/simrat39/symbols-outline.nvim
+      {
+        "simrat39/symbols-outline.nvim"
+      }
     },
     -- All other entries override the setup() call for default plugins
     ["null-ls"] = function(config)
@@ -120,10 +126,133 @@ local config = {
       return config -- return final config table
     end,
     treesitter = {
-      ensure_installed = { "lua" },
+      ensure_installed = {
+        "astro",
+        "bash",
+        "c",
+        "c_sharp",
+        "comment",
+        "cpp",
+        "css",
+        "dart",
+        "dockerfile",
+        "elixir",
+        "fish",
+        "go",
+        "gomod",
+        "graphql",
+        "html",
+        "java",
+        "javascript",
+        "jsdoc",
+        "json",
+        "kotlin",
+        "lua",
+        "markdown",
+        "make",
+        "prisma",
+        "proto",
+        "python",
+        "regex",
+        "ruby",
+        "rust",
+        "scss",
+        "solidity",
+        "sql",
+        "svelte",
+        "toml",
+        "tsx",
+        "typescript",
+        "vue",
+        "yaml",
+        "zig"
+      },
     },
     ["nvim-lsp-installer"] = {
-      ensure_installed = { "sumneko_lua" },
+      ensure_installed = {
+        --Angular
+        "angularls",
+        --Astro
+        "astro",
+        --Bash
+        "bashls",
+        --C
+        "ccls",
+        --C#
+        "csharp_ls",
+        --C++
+        "ccls",
+        --Cmake
+        "cmake",
+        --CSS
+        "cssls",
+        --Cucumber
+        "cucumber_language_server",
+        --Dart
+        "dartls",
+        --Deno
+        "denols",
+        --Docker
+        "dockerls",
+        --ESLint
+        "eslint",
+        --Elixir
+        "elixirls",
+        --F#
+        "fsautocomplete",
+        --Golang
+        "gopls",
+        --Grammarly
+        "grammarly",
+        --GraphQL
+        "graphql",
+        --HTML
+        "html",
+        --Haskell
+        "hls",
+        --Java"
+        "jdtls",
+        --Json
+        "jsonls",
+        --Jsonnet
+        "jsonnet_ls",
+        --Kotlin
+        "kotlin_language_server",
+        --Lua
+        "sumneko_lua",
+        --Markdown
+        "marksman",
+        --Prisma
+        "prismals",
+        --Python
+        "pyright",
+        --Ruby
+        "solargraph",
+        --Rust
+        "rust_analyzer",
+        --SQL
+        "sqlls",
+        --Solidity
+        "solang",
+        --Style Lint
+        "stylelint_lsp",
+        --Svelte.js
+        "svelte",
+        --TOML
+        "taplo",
+        --Tailwindcss
+        "tailwindcss",
+        --TypeScript / Javascript
+        "tsserver",
+        --Vue.js
+        "volar",
+        --XML
+        "lemminx",
+        --YAML
+        "yamlls",
+        --Zig
+        "zls"
+      },
     },
     packer = {
       compile_path = vim.fn.stdpath "data" .. "/packer_compiled.lua",
@@ -182,29 +311,9 @@ local config = {
         -- ["<leader>lf"] = false -- disable formatting keymap
       },
     },
-    -- add to the server on_attach function
-    -- on_attach = function(client, bufnr)
-    -- end,
-
-    -- override the lsp installer server-registration function
-    -- server_registration = function(server, opts)
-    --   require("lspconfig")[server].setup(opts)
-    -- end,
 
     -- Add overrides for LSP server settings, the keys are the name of the server
     ["server-settings"] = {
-      -- example for addings schemas to yamlls
-      -- yamlls = {
-      --   settings = {
-      --     yaml = {
-      --       schemas = {
-      --         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
-      --         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-      --         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-      --       },
-      --     },
-      --   },
-      -- },
     },
   },
 
@@ -238,19 +347,6 @@ local config = {
       pattern = "plugins.lua",
       command = "source <afile> | PackerSync",
     })
-
-    -- Set up custom filetypes
-    -- vim.filetype.add {
-    --   extension = {
-    --     foo = "fooscript",
-    --   },
-    --   filename = {
-    --     ["Foofile"] = "fooscript",
-    --   },
-    --   pattern = {
-    --     ["~/%.config/foo/.*"] = "fooscript",
-    --   },
-    -- }
   end,
 }
 
